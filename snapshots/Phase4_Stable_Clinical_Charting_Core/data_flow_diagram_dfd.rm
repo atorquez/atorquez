@@ -1,0 +1,41 @@
+                          ┌──────────────────────────────┐
+                          │        User Query            │
+                          │  "glucose and BP over time"  │
+                          └───────────────┬──────────────┘
+                                          │ text
+                                          ▼
+┌──────────────────────────────┐     ┌──────────────────────────────┐
+│        Data Files            │     │        nl_parser.py          │
+│  demographics.csv            │     │  • Extract metrics           │
+│  labs_february.csv           │     │  • Extract filters           │
+│  vitals_january.csv          │     │  • Infer X‑axis              │
+└───────────────┬──────────────┘     │  • Detect dual‑axis          │
+                │ schemas             └───────────────┬──────────────┘
+                ▼                                     │ intent + columns
+┌──────────────────────────────┐                      ▼
+│   Schema Detector (main.py)  │     ┌──────────────────────────────┐
+│  • Infer column types        │     │     router.py / file_router  │
+│  • Build unified schema      │     │  • Map metrics → files       │
+└───────────────┬──────────────┘     │  • Build merge plan          │
+                │ unified schema      └───────────────┬──────────────┘
+                ▼                                     │ merge_plan
+┌──────────────────────────────┐                      ▼
+│         merger.py            │     ┌──────────────────────────────┐
+│  • Safe inner joins          │     │      intent_to_spec.py       │
+│  • Validate IDs              │     │  • Apply filters             │
+│  • Produce merged_df         │     │  • Assign axes               │
+└───────────────┬──────────────┘     │  • Build chart_spec          │
+                │ merged_df           └───────────────┬──────────────┘
+                ▼                                     │ chart_spec
+┌──────────────────────────────┐                      ▼
+│        validator.py          │     ┌──────────────────────────────┐
+│  • Validate axes             │     │        renderer.py           │
+│  • Validate metrics          │     │  • Render chart              │
+│  • Validate filters          │     │  • Dual‑axis layout          │
+└───────────────┬──────────────┘     └───────────────┬──────────────┘
+                │ validated_spec                          │ chart
+                ▼                                          ▼
+                          ┌──────────────────────────────┐
+                          │         Final Chart          │
+                          │   Displayed to clinician     │
+                          └──────────────────────────────┘

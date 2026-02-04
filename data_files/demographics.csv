@@ -1,0 +1,8 @@
+patient_id,gender,age_group,ethnicity,smoker
+101,female,senior,white,false
+102,male,adult,black,true
+103,female,adult,hispanic,false
+104,male,senior,asian,true
+105,female,senior,white,false
+106,male,adult,black,false
+107,female,adult,hispanic,true

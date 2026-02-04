@@ -1,0 +1,21 @@
+{
+  "chart": {
+    "type": "line",
+    "title": "Blood Pressure Over Time"
+  },
+  "encoding": {
+    "x": {
+      "column": "day",
+      "type": "temporal"
+    },
+    "y": {
+      "column": "blood_pressure",
+      "type": "quantitative"
+    },
+    "color": {
+      "column": "patient_id",
+      "type": "nominal"
+    },
+    "tooltip": ["day", "blood_pressure", "patient_id"]
+  }
+}

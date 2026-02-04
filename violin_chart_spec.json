@@ -1,0 +1,17 @@
+{
+  "chart": {
+    "type": "violin",
+    "title": "Blood Pressure Distribution by Age Group"
+  },
+  "encoding": {
+    "x": {
+      "column": "age_group",
+      "type": "nominal"
+    },
+    "y": {
+      "column": "blood_pressure",
+      "type": "quantitative"
+    },
+    "tooltip": ["age_group", "blood_pressure"]
+  }
+}

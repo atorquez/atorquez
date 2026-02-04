@@ -1,0 +1,20 @@
+{
+  "chart": {
+    "type": "line",
+    "title": "Blood Pressure Over Time with CI"
+  },
+  "statistics": {
+    "confidence_interval": 0.95
+  },
+  "encoding": {
+    "x": {
+      "column": "day",
+      "type": "temporal"
+    },
+    "y": {
+      "column": "blood_pressure",
+      "type": "quantitative"
+    },
+    "tooltip": ["day", "blood_pressure"]
+  }
+}

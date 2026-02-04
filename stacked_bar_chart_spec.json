@@ -1,0 +1,17 @@
+{
+  "chart": {
+    "type": "bar",
+    "title": "Diagnosis by Gender (Adults Only)"
+  },
+  "data": {
+    "filters": [
+      {"column": "age_group", "operator": "==", "value": "19-65"}
+    ]
+  },
+  "encoding": {
+    "x": {"column": "diagnosis", "type": "nominal"},
+    "y": {"column": "count", "type": "quantitative"},
+    "color": {"column": "gender", "type": "nominal"},
+    "tooltip": ["diagnosis", "gender", "age_group", "count"]
+  }
+}

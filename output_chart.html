@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-fcde19e58f762c4c6a53e232db9881b4"}, "mark": {"type": "bar"}, "encoding": {"color": {"value": "steelblue"}, "x": {"field": "age_group", "type": "nominal"}, "y": {"field": "glucose_level", "type": "quantitative"}}, "height": 400, "title": "Glucose Level by Category", "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-fcde19e58f762c4c6a53e232db9881b4": [{"patient_id": 1, "date": "2025-03-13 15:00:00", "glucose_level": 98.7617368497666, "cholesterol": 179.865382598038, "hba1c": 5.844649934382852, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": false}, {"patient_id": 2, "date": "2025-03-13 16:00:00", "glucose_level": 103.96758545297978, "cholesterol": 172.62052266101588, "hba1c": 5.646650973075424, "gender": "female", "age_group": "senior", "ethnicity": "black", "smoker": true}, {"patient_id": 3, "date": "2025-03-13 17:00:00", "glucose_level": 112.33625711407898, "cholesterol": 176.3501112004822, "hba1c": 5.774732747226787, "gender": "female", "age_group": "adult", "ethnicity": "asian", "smoker": false}, {"patient_id": 4, "date": "2025-03-13 18:00:00", "glucose_level": 88.4441071452623, "cholesterol": 160.43596648028833, "hba1c": 5.643950208232391, "gender": "male", "age_group": "child", "ethnicity": "hispanic", "smoker": false}, {"patient_id": 5, "date": "2025-03-13 19:00:00", "glucose_level": 108.7050123106632, "cholesterol": 174.31062567835, "hba1c": 5.968808136476095, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": true}, {"patient_id": 1, "date": "2025-06-12 15:00:00", "glucose_level": 114.52278933754738, "cholesterol": 190.07947714298984, "hba1c": 5.8427237487371055, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": false}, {"patient_id": 2, "date": "2025-06-12 16:00:00", "glucose_level": 99.27277573650508, "cholesterol": 175.9225695707931, "hba1c": 5.588334908000678, "gender": "female", "age_group": "senior", "ethnicity": "black", "smoker": true}, {"patient_id": 3, "date": "2025-06-12 17:00:00", "glucose_level": 101.60061626862851, "cholesterol": 184.9852258211185, "hba1c": 5.0520556454736685, "gender": "female", "age_group": "adult", "ethnicity": "asian", "smoker": false}, {"patient_id": 4, "date": "2025-06-12 18:00:00", "glucose_level": 94.01468030146626, "cholesterol": 169.89152573394304, "hba1c": 5.9275418424105215, "gender": "male", "age_group": "child", "ethnicity": "hispanic", "smoker": false}, {"patient_id": 5, "date": "2025-06-12 19:00:00", "glucose_level": 106.5520926933884, "cholesterol": 180.05605467457366, "hba1c": 5.308113068724153, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": true}, {"patient_id": 1, "date": "2025-09-15 15:00:00", "glucose_level": 114.16316156110246, "cholesterol": 176.03097716740976, "hba1c": 5.28756260231915, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": false}, {"patient_id": 2, "date": "2025-09-15 16:00:00", "glucose_level": 88.89340494305583, "cholesterol": 188.9493632608772, "hba1c": 5.828901483838126, "gender": "female", "age_group": "senior", "ethnicity": "black", "smoker": true}, {"patient_id": 3, "date": "2025-09-15 17:00:00", "glucose_level": 93.95961005720078, "cholesterol": 208.33144891581765, "hba1c": 5.745308497487891, "gender": "female", "age_group": "adult", "ethnicity": "asian", "smoker": false}, {"patient_id": 4, "date": "2025-09-15 18:00:00", "glucose_level": 126.48815008813504, "cholesterol": 179.8734572710825, "hba1c": 5.898322160922632, "gender": "male", "age_group": "child", "ethnicity": "hispanic", "smoker": false}, {"patient_id": 5, "date": "2025-09-15 19:00:00", "glucose_level": 119.1531391274867, "cholesterol": 153.07784101667207, "hba1c": 5.346194177154329, "gender": "male", "age_group": "adult", "ethnicity": "white", "smoker": true}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

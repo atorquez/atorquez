@@ -1,0 +1,87 @@
+# ---------------------------------------------------
+# Build a human-readable chart title
+# ---------------------------------------------------
+def build_title(intent):
+    chart_type = intent.get("chart_type")
+    y_axis = intent.get("y_axis")
+    filters = intent.get("filters", [])
+
+    # Multi-metric support
+    if isinstance(y_axis, list):
+        title = ", ".join([y.replace("_", " ").title() for y in y_axis])
+    elif y_axis:
+        title = y_axis.replace("_", " ").title()
+    else:
+        title = "Value"
+
+    # Chart type context
+    if chart_type == "line":
+        title += " Over Time"
+    elif chart_type == "bar":
+        title += " by Category"
+    elif chart_type in ("boxplot", "violin"):
+        title += " Distribution"
+
+    # Filters
+    if filters:
+        parts = []
+        for f in filters:
+            col = f["column"].replace("_", " ").title()
+            op = f["operator"]
+            val = f["value"]
+            parts.append(f"{col} {op} {val}")
+        title += " (" + ", ".join(parts) + ")"
+
+    return title
+
+
+# ---------------------------------------------------
+# Phase‑3 intent → spec converter
+# ---------------------------------------------------
+def intent_to_spec(intent, merged_columns):
+    chart_type = intent.get("chart_type")
+    x_axis = intent.get("x_axis")
+    y_axis_raw = intent.get("y_axis")
+    color = intent.get("color")
+    filters = intent.get("filters", [])
+    statistics = intent.get("statistics", {})
+
+    # Normalize y-axis to list
+    if isinstance(y_axis_raw, list):
+        y_cols = y_axis_raw
+    else:
+        y_cols = [y_axis_raw]
+
+    # Validate required fields
+    if chart_type is None or x_axis is None or y_axis_raw is None:
+        return {
+            "chart": {"type": chart_type, "title": "Value"},
+            "encoding": {},
+            "data": {"filters": filters}
+        }
+
+    # Chart block
+    chart_block = {
+        "type": chart_type,
+        "title": build_title(intent)
+    }
+
+    # Encoding block (Phase‑3 unified format)
+    encoding_block = {
+        "x": {"column": x_axis, "type": "temporal"},
+        "y": {"column": y_cols},
+        "color": {"column": color} if color else None,
+        "tooltip": [x_axis] + y_cols
+    }
+
+    # Final spec
+    spec = {
+        "chart": chart_block,
+        "encoding": encoding_block,
+        "data": {"filters": filters}
+    }
+
+    if statistics:
+        spec["statistics"] = statistics
+
+    return spec

@@ -1,0 +1,71 @@
+User
+ │
+ │ 1. Runs main.py
+ ▼
+main.py
+ │
+ │ 2. Load CSV files
+ │ 3. Infer schemas (temporal, quantitative, nominal)
+ ▼
+nl_parser.py
+ │
+ │ 4. parse_natural_language(text)
+ │    - extract metrics
+ │    - extract filters
+ │    - detect multi‑metric intent
+ │    - unified X‑axis inference
+ │    - dual‑axis detection
+ │
+ │--> returns (intent, mentioned_columns)
+ ▼
+router.py / file_router.py
+ │
+ │ 5. route_files(mentioned_columns)
+ │    - map metrics → files
+ │    - choose primary file
+ │    - build merge plan
+ │
+ │--> returns merge_plan
+ ▼
+merger.py
+ │
+ │ 6. merge_files(merge_plan)
+ │    - safe_inner_join on patient_id
+ │    - validate no duplicate IDs
+ │    - produce merged_df
+ │
+ │--> returns merged_df
+ ▼
+intent_to_spec.py
+ │
+ │ 7. intent_to_spec(intent, merged_df)
+ │    - assign axes
+ │    - apply filters
+ │    - choose chart type
+ │    - build chart_spec
+ │
+ │--> returns chart_spec
+ ▼
+validator.py
+ │
+ │ 8. validate(chart_spec)
+ │    - check axes exist
+ │    - check metrics exist
+ │    - check filters valid
+ │    - ensure no contradictions
+ │
+ │--> returns validated_spec
+ ▼
+renderer.py
+ │
+ │ 9. render(validated_spec)
+ │    - line/bar/dual‑axis chart
+ │    - titles, labels, layout
+ │
+ │--> displays chart
+ ▼
+User
+ │
+ │ 10. Sees final chart
+ ▼
+(End)

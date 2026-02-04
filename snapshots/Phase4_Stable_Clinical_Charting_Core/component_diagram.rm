@@ -1,0 +1,50 @@
+                           ┌──────────────────────────┐
+                           │        main.py           │
+                           │  Orchestrator / Driver   │
+                           └─────────────┬────────────┘
+                                         │
+                                         ▼
+        ┌──────────────────────────────────────────────────────────┐
+        │                    Core Processing Layer                  │
+        └──────────────────────────────────────────────────────────┘
+
+┌──────────────────────────┐       ┌──────────────────────────┐
+│       nl_parser.py       │       │       router.py          │
+│ Natural Language Parsing │       │ Column/File Routing       │
+│ • Extract metrics        │       │ • Map metrics → files     │
+│ • Extract filters        │       │ • Choose primary file     │
+│ • Unified X‑axis logic   │       │ • Build merge plan        │
+│ • Dual‑axis detection    │       └─────────────┬────────────┘
+└─────────────┬────────────┘                     │
+              │                                   ▼
+              │                     ┌──────────────────────────┐
+              │                     │       merger.py          │
+              │                     │ Safe Data Merging        │
+              │                     │ • Inner join on ID       │
+              │                     │ • Duplicate‑ID checks    │
+              │                     │ • Produce merged_df      │
+              │                     └─────────────┬────────────┘
+              │                                   │
+              ▼                                   ▼
+┌──────────────────────────┐       ┌──────────────────────────┐
+│   intent_to_spec.py      │       │      validator.py        │
+│ Intent → Chart Spec      │       │ Chart Safety Checks      │
+│ • Assign axes            │       │ • Axes exist             │
+│ • Apply filters          │       │ • Metrics valid          │
+│ • Choose chart type      │       │ • Filters consistent     │
+│ • Build chart_spec       │       │ • No contradictions      │
+└─────────────┬────────────┘       └─────────────┬────────────┘
+              │                                   │
+              ▼                                   ▼
+                     ┌──────────────────────────┐
+                     │       renderer.py        │
+                     │ Chart Rendering Engine   │
+                     │ • Line / Bar / Dual‑axis │
+                     │ • Titles, labels, layout │
+                     └─────────────┬────────────┘
+                                   │
+                                   ▼
+                           ┌──────────────────────────┐
+                           │        Final Chart       │
+                           │ (Displayed to clinician) │
+                           └──────────────────────────┘

@@ -1,0 +1,63 @@
+┌──────────────────────────────────────────────────────────────┐
+│                          main.py                              │
+│        (Entry point: loads data, schemas, waits for query)    │
+└───────────────┬──────────────────────────────────────────────┘
+                │
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                        nl_parser.py                           │
+│   Natural Language → Structured Intent                        │
+│                                                              │
+│   • Extract metrics, filters, categories                      │
+│   • Detect multi‑metric requests                              │
+│   • Unified X‑axis inference (day > time > date)              │
+│   • Keyword‑based dual‑axis detection                         │
+│   • Build intent: chart_type, axes, filters, metrics          │
+└───────────────┬──────────────────────────────────────────────┘
+                │ intent + mentioned_columns
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                     router.py / file_router.py                │
+│   Determine which files contain which metrics                 │
+│   • Map metrics → files                                       │
+│   • Choose primary file (highest temporal resolution)         │
+│   • Build safe merge plan                                     │
+└───────────────┬──────────────────────────────────────────────┘
+                │ merge_plan
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                         merger.py                             │
+│   Execute safe joins                                          │
+│   • Inner join on patient_id                                  │
+│   • Validate no duplicate IDs                                 │
+│   • Produce unified dataframe                                 │
+└───────────────┬──────────────────────────────────────────────┘
+                │ merged_df
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                    intent_to_spec.py                          │
+│   Convert intent → chart specification                        │
+│   • Assign axes                                                │
+│   • Apply filters                                              │
+│   • Select chart type                                          │
+│   • Prepare data subset                                        │
+└───────────────┬──────────────────────────────────────────────┘
+                │ chart_spec
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                        validator.py                           │
+│   Validate chart before rendering                             │
+│   • Check axes exist                                           │
+│   • Check metrics exist                                        │
+│   • Check filters are valid                                    │
+│   • Ensure no contradictions                                   │
+└───────────────┬──────────────────────────────────────────────┘
+                │ validated_spec
+                ▼
+┌──────────────────────────────────────────────────────────────┐
+│                        renderer.py                            │
+│   Render final chart                                          │
+│   • Line, bar, dual‑axis                                       │
+│   • Titles, labels, layout                                     │
+│   • Output to screen                                           │
+└──────────────────────────────────────────────────────────────┘

@@ -1,0 +1,15 @@
+{
+  "chart": {
+    "type": "pie"
+  },
+  "encoding": {
+    "theta": {
+      "column": "count",
+      "type": "quantitative"
+    },
+    "color": {
+      "column": "diagnosis",
+      "type": "nominal"
+    }
+  }
+}

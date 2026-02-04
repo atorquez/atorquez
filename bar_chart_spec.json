@@ -1,0 +1,17 @@
+{
+  "chart": {
+    "type": "bar",
+    "title": "Diagnosis Frequency"
+  },
+  "encoding": {
+    "x": {
+      "column": "diagnosis",
+      "type": "nominal"
+    },
+    "y": {
+      "column": "count",
+      "type": "quantitative"
+    },
+    "tooltip": ["diagnosis", "count"]
+  }
+}
