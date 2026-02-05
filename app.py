@@ -22,7 +22,7 @@ st.markdown(
     /* GLOBAL BACKGROUND                                  */
     /* -------------------------------------------------- */
     .stApp {{
-        background-color: #d5dbe1;
+        background-color: #d8eae2;
     }}
 
     /* -------------------------------------------------- */
