@@ -26,7 +26,7 @@ st.markdown(
     }}
 
     /* -------------------------------------------------- */
-    /* INPUT LABELS (e.g., "What would you like to visualize") */
+    /* INPUT LABELS                                       */
     /* -------------------------------------------------- */
     label[data-testid="stWidgetLabel"] {{
         font-size: 20px !important;
@@ -35,7 +35,7 @@ st.markdown(
     }}
 
     /* -------------------------------------------------- */
-    /* TEXT INPUT BOX (user query)                        */
+    /* TEXT INPUT BOX                                     */
     /* -------------------------------------------------- */
     .stTextInput input {{
         font-size: 20px !important;
@@ -70,7 +70,7 @@ st.markdown(
     }}
 
     /* -------------------------------------------------- */
-    /* FORCE BOLD TEXT FOR st.dataframe() (final fix)     */
+    /* FORCE BOLD TEXT FOR st.dataframe()                 */
     /* -------------------------------------------------- */
 
     /* Body cells */
@@ -83,6 +83,23 @@ st.markdown(
     div[data-testid="stDataFrame"] div[data-testid="column"] span span {{
         font-size: 18px !important;
         font-weight: 900 !important;
+    }}
+
+    /* -------------------------------------------------- */
+    /* WIDEN FILE UPLOADER                                */
+    /* -------------------------------------------------- */
+    div[data-testid="stFileUploader"] {{
+        width: 100% !important;
+        max-width: 900px !important;
+        margin: 0 auto !important;
+    }}
+
+    div[data-testid="stFileUploader"] section {{
+        padding: 20px !important;
+    }}
+
+    div[data-testid="stFileUploader"] section > div {{
+        font-size: 18px !important;
     }}
 
     </style>
