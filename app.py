@@ -480,7 +480,7 @@ def main():
             st.write("**Vitals Preview**")
             st.dataframe(vitals_df.head())
 
-        st.markdown("---")
+            st.markdown("---")
 
        
     # ---------------------------------------------------------
