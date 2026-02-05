@@ -503,6 +503,7 @@ def main():
     **4. Try a Second Chart**
     - Type: **heart rate over time**
     - Notice how the chart updates.
+
     **5. Explore a Grouped View**
     - Type: **average glucose by age group**
     - Review how the grouped chart looks.
@@ -524,25 +525,25 @@ def main():
 
     with st.expander("Example queries"):
         st.write("""
-        - mean glucose by age group  
-        - glucose over time  
-        - average sugar for kids  
-        - mean cholesterol and glucose  
-        - mean and std glucose  
-        - mean glucose and cholesterol for adults  
-    """)
+            - mean glucose by age group  
+            - glucose over time  
+            - average sugar for kids  
+            - mean cholesterol and glucose  
+            - mean and std glucose  
+            - mean glucose and cholesterol for adults  
+        """)
 
-        # ---------------------------------------------------------
-        # Generate Chart
-        # ---------------------------------------------------------
-        if st.button("Generate Chart"):
-            if not query.strip():
-                st.error("Please enter a question.")
-            else:
-                try:
-                    run_engine(query, labs_df, vitals_df)
-                except Exception as e:
-                    st.error(f"Something went wrong while generating the chart: {e}")
+    # ---------------------------------------------------------
+    # Generate Chart
+    # ---------------------------------------------------------
+    if st.button("Generate Chart"):
+        if not query.strip():
+            st.error("Please enter a question.")
+        else:
+            try:
+                run_engine(query, labs_df, vitals_df)
+            except Exception as e:
+                st.error(f"Something went wrong while generating the chart: {e}")
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
