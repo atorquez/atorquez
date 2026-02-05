@@ -88,11 +88,15 @@ st.markdown(
     /* -------------------------------------------------- */
     /* WIDEN FILE UPLOADER                                */
     /* -------------------------------------------------- */
-    div[data-testid="stFileUploader"] {{
-        width: 100% !important;
-        max-width: 900px !important;
-        margin: 0 auto !important;
-    }}
+
+    /* Increase height of file uploader drop zone */
+    div[data-testid="stFileUploader"] section {
+        padding: 40px !important;        /* was 20px — doubling height */
+        min-height: 180px !important;    /* enforce a taller drop zone */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
 
     div[data-testid="stFileUploader"] section {{
         padding: 20px !important;
