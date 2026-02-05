@@ -102,7 +102,6 @@ st.markdown(
         font-size: 18px !important;
     }
 
-
     </style>
     """,
     unsafe_allow_html=True
