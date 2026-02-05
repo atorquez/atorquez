@@ -491,14 +491,18 @@ def main():
     query = st.text_input("What would you like to visualize?")
 
     with st.expander("Example queries"):
-        st.write("""
-            - mean glucose by age group  
-            - glucose over time  
-            - average sugar for kids  
-            - mean cholesterol and glucose  
-            - mean and std glucose  
-            - mean glucose and cholesterol for adults  
-        """)
+        st.markdown("""
+    <div style='font-size:18px; font-weight:600; line-height:1.6;'>
+    • <b>glucose over time</b><br>
+    • <b>heart rate over time</b><br>
+    • <b>mean glucose by age group</b><br>
+    • <b>average glucose by age group</b><br>
+    • <b>cholesterol over time for female patients</b><br>
+    • <b>mean cholesterol and glucose</b>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 
     # ---------------------------------------------------------
     # Generate Chart
