@@ -480,7 +480,7 @@ def main():
             st.write("**Vitals Preview**")
             st.dataframe(vitals_df.head())
 
-            st.markdown("---")
+        st.markdown("---")
 
        
     # ---------------------------------------------------------
@@ -512,5 +512,5 @@ def main():
             except Exception as e:
                 st.error(f"Something went wrong while generating the chart: {e}")
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
