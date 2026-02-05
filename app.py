@@ -503,6 +503,7 @@ def main():
     **4. Try a Second Chart**
     - Type: **heart rate over time**
     - Notice how the chart updates.
+    
     **5. Explore a Grouped View**
     - Type: **average glucose by age group**
     - Review how the grouped chart looks.
@@ -510,6 +511,7 @@ def main():
     **6. Try a Filtered View**
     - Type: **cholesterol over time for female patients**
     - Check if the filter behaves as expected.
+    
     **7. Review the Result Table**
     - Scroll down to the **Aggregated / Result Table**.
     - Confirm the table matches the chart you generated.
