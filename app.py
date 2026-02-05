@@ -484,40 +484,6 @@ def main():
 
        
     # ---------------------------------------------------------
-    # Suggested Tasks (Phase I User Test)
-    # ---------------------------------------------------------
-    with st.expander("💡 Suggested Tasks for Testing"):
-        st.markdown("""
-    **1. Upload Your Data**
-    - Upload the two CSV files provided to you.
-    - Confirm that the app detects them successfully.
-
-    **2. Preview the Uploaded Data**
-    - Click **Preview Uploaded Data**.
-    - Look at the table and confirm it feels readable and clear.
-
-    **3. Generate a Simple Chart**
-    - Type: **glucose over time**
-    - Observe the chart and title.
-
-    **4. Try a Second Chart**
-    - Type: **heart rate over time**
-    - Notice how the chart updates.
-    
-    **5. Explore a Grouped View**
-    - Type: **average glucose by age group**
-    - Review how the grouped chart looks.
-
-    **6. Try a Filtered View**
-    - Type: **cholesterol over time for female patients**
-    - Check if the filter behaves as expected.
-    
-    **7. Review the Result Table**
-    - Scroll down to the **Aggregated / Result Table**.
-    - Confirm the table matches the chart you generated.
-    """)
-
-    # ---------------------------------------------------------
     # Query Section
     # ---------------------------------------------------------
     st.subheader("2. Describe the Chart")
