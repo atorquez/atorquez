@@ -22,7 +22,7 @@ st.markdown(
     /* GLOBAL BACKGROUND                                  */
     /* -------------------------------------------------- */
     .stApp {{
-        background-color: #d5dbe1; /* Civio soft steel gray */
+        background-color: #d5dbe1;
     }}
 
     /* -------------------------------------------------- */
@@ -72,14 +72,11 @@ st.markdown(
     /* -------------------------------------------------- */
     /* FORCE BOLD TEXT FOR st.dataframe()                 */
     /* -------------------------------------------------- */
-
-    /* Body cells */
     div[data-testid="stDataFrame"] div[data-testid="cell"] span span {{
         font-size: 18px !important;
         font-weight: 900 !important;
     }}
 
-    /* Header cells */
     div[data-testid="stDataFrame"] div[data-testid="column"] span span {{
         font-size: 18px !important;
         font-weight: 900 !important;
@@ -88,19 +85,17 @@ st.markdown(
     /* -------------------------------------------------- */
     /* WIDEN FILE UPLOADER                                */
     /* -------------------------------------------------- */
-
-    /* Increase height of file uploader drop zone */
-    div[data-testid="stFileUploader"] section {
-        padding: 40px !important;        /* was 20px — doubling height */
-        min-height: 180px !important;    /* enforce a taller drop zone */
+    div[data-testid="stFileUploader"] section {{
+        padding: 40px !important;
+        min-height: 180px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-    }
+    }}
 
-    div[data-testid="stFileUploader"] section > div {
+    div[data-testid="stFileUploader"] section > div {{
         font-size: 18px !important;
-    }
+    }}
 
     </style>
     """,
