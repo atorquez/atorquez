@@ -503,7 +503,6 @@ def main():
     **4. Try a Second Chart**
     - Type: **heart rate over time**
     - Notice how the chart updates.
-
     **5. Explore a Grouped View**
     - Type: **average glucose by age group**
     - Review how the grouped chart looks.
