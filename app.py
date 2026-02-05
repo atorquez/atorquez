@@ -98,13 +98,10 @@ st.markdown(
         justify-content: center !important;
     }
 
-    div[data-testid="stFileUploader"] section {{
-        padding: 20px !important;
-    }}
-
-    div[data-testid="stFileUploader"] section > div {{
+    div[data-testid="stFileUploader"] section > div {
         font-size: 18px !important;
-    }}
+    }
+
 
     </style>
     """,
