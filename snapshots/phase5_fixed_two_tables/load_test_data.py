@@ -64,13 +64,12 @@ def load_synthetic_medical_data():
         base_time = pd.Timestamp(f"{d} 08:00:00")  # first patient at 8 AM
 
         for i, pid in enumerate(patient_ids):
-            # Each patient gets 4 readings, 1 hour apart
             for reading_offset in range(4):
                 timestamp = base_time + pd.Timedelta(hours=i + reading_offset)
 
                 df = pd.DataFrame({
                     "patient_id": [pid],
-                    "date": [timestamp],   # <-- UNIFIED TIMESTAMP
+                    "date": [timestamp],   # unified timestamp
                     "blood_pressure": [120 + np.random.normal(0, 5)],
                     "heart_rate": [75 + np.random.normal(0, 3)],
                     "temperature": [98.6 + np.random.normal(0, 0.3)],
@@ -89,13 +88,20 @@ def load_synthetic_medical_data():
     vitals = vitals.sort_values(["patient_id", "date"]).reset_index(drop=True)
 
     # -----------------------------------------
-    # 6. Return unified tables
+    # 6. SAVE TO CSV (NEW)
+    # -----------------------------------------
+    labs.to_csv("labs_2025.csv", index=False)
+    vitals.to_csv("vitals_2025.csv", index=False)
+
+    print("Saved labs_2025.csv and vitals_2025.csv")
+
+    # -----------------------------------------
+    # 7. Return unified tables
     # -----------------------------------------
     return labs, vitals
 
-# -----------------------------------------
+
 # Example usage
-# -----------------------------------------
 labs, vitals = load_synthetic_medical_data()
 
 print("=== LABS ===")

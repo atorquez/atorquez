@@ -9,30 +9,22 @@ def build_title(intent):
     y_right = intent.get("y_axis_right")
     filters = intent.get("filters", [])
 
-    # -------------------------
-    # Collect all metric fields
-    # -------------------------
     metrics = []
-
-    # Primary y_axis
     if isinstance(y_axis, list):
         metrics.extend(y_axis)
     elif y_axis:
         metrics.append(y_axis)
 
-    # Dual-axis left
     if isinstance(y_left, list):
         metrics.extend(y_left)
     elif y_left:
         metrics.append(y_left)
 
-    # Dual-axis right
     if isinstance(y_right, list):
         metrics.extend(y_right)
     elif y_right:
         metrics.append(y_right)
 
-    # Deduplicate while preserving order
     seen = set()
     unique_metrics = []
     for m in metrics:
@@ -40,17 +32,11 @@ def build_title(intent):
             seen.add(m)
             unique_metrics.append(m)
 
-    # -------------------------
-    # Base title from metrics
-    # -------------------------
     if unique_metrics:
         title = ", ".join([m.replace("_", " ").title() for m in unique_metrics])
     else:
         title = "Value"
 
-    # -------------------------
-    # Chart-type suffix
-    # -------------------------
     if chart_type == "line":
         title += " Over Time"
     elif chart_type == "bar":
@@ -58,9 +44,6 @@ def build_title(intent):
     elif chart_type in ("boxplot", "violin"):
         title += " Distribution"
 
-    # -------------------------
-    # Filters in title
-    # -------------------------
     if filters:
         parts = []
         for f in filters:
@@ -84,7 +67,29 @@ def intent_to_spec(intent, merged_columns):
     statistics = intent.get("statistics", {})
 
     # ---------------------------------------------------
-    # Normalize x-axis to match merged dataframe columns
+    # Auto-detect aggregated column names
+    # ---------------------------------------------------
+    if y_axis_raw and isinstance(y_axis_raw, str) and "_" in y_axis_raw:
+        parts = y_axis_raw.split("_", 1)
+        possible_stat = parts[0]
+        possible_metric = parts[1]
+
+        if possible_stat in ("mean", "median", "std", "min", "max", "var", "sum", "count"):
+            statistics = {"aggregation": [possible_stat]}
+            intent["statistics"] = statistics
+            intent["y_axis"] = possible_metric
+            y_axis_raw = possible_metric
+
+            if not chart_type:
+                chart_type = "line"
+                intent["chart_type"] = "line"
+
+            if not x_axis and "date" in merged_columns:
+                x_axis = "date"
+                intent["x_axis"] = "date"
+
+    # ---------------------------------------------------
+    # Normalize x-axis
     # ---------------------------------------------------
     if x_axis == "day" and "day" not in merged_columns and "date" in merged_columns:
         x_axis = "date"
@@ -102,6 +107,12 @@ def intent_to_spec(intent, merged_columns):
         }
 
     # ---------------------------------------------------
+    # Safety: drop invalid color columns
+    # ---------------------------------------------------
+    if color not in merged_columns:
+        color = None
+
+    # ---------------------------------------------------
     # Chart block
     # ---------------------------------------------------
     chart_block = {
@@ -110,10 +121,9 @@ def intent_to_spec(intent, merged_columns):
     }
 
     # ---------------------------------------------------
-    # PHASE 5: Dual-axis mode
+    # Dual-axis mode
     # ---------------------------------------------------
     if y_left or y_right:
-        # Normalize left/right to lists for tooltip construction
         def to_list(v):
             if v is None:
                 return []
@@ -146,49 +156,57 @@ def intent_to_spec(intent, merged_columns):
         return spec
 
     # ---------------------------------------------------
-    # PHASE 3: Single-axis mode (fallback)
+    # Grouped aggregation bar charts (Option A: single metric)
+    # ---------------------------------------------------
+    if chart_type == "bar" and statistics and x_axis and y_axis_raw:
+        stat_list = statistics.get("aggregation", [])
+        stat = stat_list[0] if stat_list else None
+
+        metric = y_axis_raw if isinstance(y_axis_raw, str) else y_axis_raw[0]
+        y_column = f"{stat}_{metric}" if stat else metric
+
+        encoding_block = {
+            "x": {"column": x_axis, "type": "nominal"},
+            "y": {"column": y_column},
+            "tooltip": [x_axis, y_column]
+        }
+
+        spec = {
+            "chart": chart_block,
+            "encoding": encoding_block,
+            "data": {"filters": filters},
+            "statistics": statistics
+        }
+
+        return spec
+
+    # ---------------------------------------------------
+    # Single-axis fallback
     # ---------------------------------------------------
     if isinstance(y_axis_raw, list):
         y_cols = y_axis_raw
     else:
         y_cols = [y_axis_raw]
 
-    # ---------------------------------------------------
-    # Determine x-axis type
-    # ---------------------------------------------------
     if chart_type in ("line", "area"):
         x_type = "temporal"
     elif chart_type in ("bar", "boxplot", "violin", "pie"):
         x_type = "nominal"
     else:
-        x_type = "temporal"  # fallback
+        x_type = "temporal"
 
-    # ---------------------------------------------------
-    # Determine y-axis column (supports statistics)
-    # ---------------------------------------------------
     stat_list = statistics.get("aggregation", [])
     stat = stat_list[0] if stat_list else None
 
-    metric = y_cols[0]  # always single metric for now
+    metric = y_cols[0]
+    y_column = f"{stat}_{metric}" if stat else metric
 
-    if stat:
-        # aggregated column name
-        y_column = f"{stat}_{metric}"
-    else:
-        # raw metric
-        y_column = metric
     tooltip_cols = [x_axis, y_column]
 
-    
-    # If statistics collapse the dataset to a single row,
-    # a line chart cannot render. Switch to bar.
     if statistics.get("aggregation") and len(merged_columns) == 1:
         chart_type = "bar"
         intent["chart_type"] = "bar"
-    
-    # ---------------------------------------------------
-    # Build encoding block
-    # ---------------------------------------------------
+
     encoding_block = {
         "x": {"column": x_axis, "type": x_type},
         "y": {"column": y_column},
@@ -196,9 +214,6 @@ def intent_to_spec(intent, merged_columns):
         "tooltip": tooltip_cols
     }
 
-    # ---------------------------------------------------
-    # Final spec
-    # ---------------------------------------------------
     spec = {
         "chart": chart_block,
         "encoding": encoding_block,

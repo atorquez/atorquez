@@ -88,12 +88,9 @@ def parse_natural_language(
                 detected_metrics.append(col)
 
     # fallback
-    # if no metric was detected, raise a clean error
-    if not detected_metrics:
-        raise ValueError(
-            f"No valid metric found in query. "
-            f"Available metrics: {', '.join(metric_candidates)}"
-        )
+    if not detected_metrics and quantitative_cols:
+        detected_metrics = [quantitative_cols[0]]
+
     intent["y_axis"] = detected_metrics
     intent["mentioned_columns"].extend(detected_metrics)
     print(">>> FINAL Y_AXIS:", intent["y_axis"])
@@ -105,7 +102,7 @@ def parse_natural_language(
     if contains_any(text_lower, ["trend", "over time", "time series"]):
         chart_type = "line"
     elif contains_any(text_lower, ["distribution", "histogram"]):
-        chart_type = "bar"   # fallback to bar chart
+        chart_type = "histogram"
     elif contains_any(text_lower, ["violin", "spread", "shape"]):
         chart_type = "violin"
     elif contains_any(text_lower, ["bar", "count", "by "]) and detected_metrics:

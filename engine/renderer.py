@@ -38,6 +38,7 @@ def render_chart(spec: dict, df: pd.DataFrame):
     chart.save("output_chart.html")
     webbrowser.open("output_chart.html")
 
+    return chart
 
 # ---------------------------------------------------------
 # PIE CHART

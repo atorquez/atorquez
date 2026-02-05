@@ -1,5 +1,3 @@
-import altair as alt
-alt.themes.enable('none')
 import streamlit as st
 import pandas as pd
 
@@ -9,86 +7,19 @@ from engine.intent_to_spec import intent_to_spec
 from engine.renderer import render_chart
 from engine.load_test_data import load_synthetic_medical_data
 
-CSS_VERSION = "v2025_02_05_04"   # increment this anytime you change CSS
-
-st.markdown(f"<!-- cache-bust: {CSS_VERSION} -->")
-st.markdown(f"**Civio Build: {CSS_VERSION}**")
 
 st.markdown(
-    f"""
-    <style id="{CSS_VERSION}">
-
-    /* -------------------------------------------------- */
-    /* GLOBAL BACKGROUND                                  */
-    /* -------------------------------------------------- */
-    .stApp {{
-        background-color: #d5dbe1; /* Civio soft steel gray */
-    }}
-
-    /* -------------------------------------------------- */
-    /* INPUT LABELS (e.g., "What would you like to visualize") */
-    /* -------------------------------------------------- */
-    label[data-testid="stWidgetLabel"] {{
-        font-size: 20px !important;
-        font-weight: 600 !important;
-        color: #1a1a1a !important;
-    }}
-
-    /* -------------------------------------------------- */
-    /* TEXT INPUT BOX (user query)                        */
-    /* -------------------------------------------------- */
-    .stTextInput input {{
-        font-size: 20px !important;
-        padding: 10px !important;
-    }}
-
-    /* -------------------------------------------------- */
-    /* EXAMPLE QUERIES                                    */
-    /* -------------------------------------------------- */
-    .example-queries {{
-        font-size: 18px !important;
-        line-height: 1.5 !important;
-        color: #2b2b2b !important;
-        margin-bottom: 12px !important;
-    }}
-
-    /* -------------------------------------------------- */
-    /* CHART DESCRIPTION                                  */
-    /* -------------------------------------------------- */
-    .chart-description-title {{
-        font-size: 22px !important;
-        font-weight: 700 !important;
-        margin-top: 20px !important;
-        margin-bottom: 6px !important;
-        color: #1a1a1a !important;
-    }}
-
-    .chart-description-text {{
-        font-size: 18px !important;
-        line-height: 1.5 !important;
-        color: #2b2b2b !important;
-    }}
-
-    /* -------------------------------------------------- */
-    /* FORCE BOLD TEXT FOR st.dataframe() (final fix)     */
-    /* -------------------------------------------------- */
-
-    /* Body cells */
-    div[data-testid="stDataFrame"] div[data-testid="cell"] span span {{
-        font-size: 18px !important;
-        font-weight: 900 !important;
-    }}
-
-    /* Header cells */
-    div[data-testid="stDataFrame"] div[data-testid="column"] span span {{
-        font-size: 18px !important;
-        font-weight: 900 !important;
-    }}
-
+    """
+    <style>
+        /* Main background */
+        .stApp {
+            background-color: #d5dbe1;
+        }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # ---------------------------------------------------------
 # Schema detection helper
@@ -265,25 +196,7 @@ def run_engine(query: str, labs_df: pd.DataFrame, vitals_df: pd.DataFrame):
     # ---------------------------------------------------------
     # Render chart
     # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    # Configure chart FIRST
-    # ---------------------------------------------------------
-    chart = chart.configure_axis(
-        labelFontSize=18,
-        labelFontWeight="bold",
-        titleFontSize=20,
-        titleFontWeight="bold"
-    ).configure_legend(
-        labelFontSize=16,
-        titleFontSize=18
-    ).configure_title(
-        fontSize=24,
-        fontWeight="bold"
-    )
-    # ---------------------------------------------------------
-    # Render chart AFTER configuration
-    # ---------------------------------------------------------
-    st.altair_chart(chart, use_container_width=True, theme=None)
+    st.altair_chart(chart, use_container_width=True)
 
 # ---------------------------------------------------------
 # Streamlit UI
