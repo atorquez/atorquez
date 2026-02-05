@@ -9,7 +9,7 @@ from engine.intent_to_spec import intent_to_spec
 from engine.renderer import render_chart
 from engine.load_test_data import load_synthetic_medical_data
 
-CSS_VERSION = "v2025_02_05_04"   # increment this anytime you change CSS
+CSS_VERSION = "v2025_02_05_05"   # increment this anytime you change CSS
 
 st.markdown(f"<!-- cache-bust: {CSS_VERSION} -->")
 st.markdown(f"**Civio Build: {CSS_VERSION}**")
