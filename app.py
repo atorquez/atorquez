@@ -469,6 +469,7 @@ def main():
     else:
         labs_df, vitals_df = load_synthetic_medical_data()
         st.success("Using synthetic demo data.")
+    
     # ---------------------------------------------------------
     # Data Preview
     # ---------------------------------------------------------
@@ -476,13 +477,15 @@ def main():
         with st.expander("Preview Uploaded Data"):
             st.write("**Labs Preview**")
             st.dataframe(labs_df.head())
-
-            st.write("**Vitals Preview**")
-            st.dataframe(vitals_df.head())
+        st.write("**Vitals Preview**")
+        st.dataframe(vitals_df.head())
 
         st.markdown("---")
+    else:
+        st.warning("Please upload both Labs and Vitals files to continue.")
+        st.stop()   # <-- Prevents the rest of the UI from rendering until both files exist
 
-       
+
     # ---------------------------------------------------------
     # Query Section
     # ---------------------------------------------------------
@@ -503,7 +506,6 @@ def main():
     """, unsafe_allow_html=True)
 
 
-
     # ---------------------------------------------------------
     # Generate Chart
     # ---------------------------------------------------------
@@ -515,6 +517,5 @@ def main():
                 run_engine(query, labs_df, vitals_df)
             except Exception as e:
                 st.error(f"Something went wrong while generating the chart: {e}")
-
 if __name__ == "__main__":
-    main()
+    main()    
