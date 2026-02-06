@@ -509,7 +509,7 @@ def main():
     • heart rate over time<br>
     • temperature over time<br>
     • blood pressure over time<br>
-    • oxygen saturation over time<br><br>
+    • oxygen saturation over time<br>
     <b>Grouped aggregations</b><br>
     • mean glucose by age group<br>
     • average glucose by age group<br>
