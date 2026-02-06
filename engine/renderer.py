@@ -164,30 +164,28 @@ def _render_line(spec, df):
         )
 
     # ---------------------------------------------------------
-    # NORMAL MULTI-METRIC LINE CHART (NO AGGREGATION HERE)
+    # NORMAL MULTI-METRIC LINE CHART (AUTO‑ZOOM Y‑AXIS)
     # ---------------------------------------------------------
     layers = []
     for y_col in y_cols:
+
+        # Auto‑zoom y-axis domain
+        y_min = df[y_col].min()
+        y_max = df[y_col].max()
+        padding = (y_max - y_min) * 0.1 if y_max != y_min else 1  # avoid zero-range
+
+        y_scale = alt.Scale(domain=[y_min - padding, y_max + padding])
+
         layer = (
             alt.Chart(df)
             .mark_line()
             .encode(
                 x=alt.X(field=x_col, type="temporal"),
-                y=alt.Y(field=y_col, type="quantitative"),
+                y=alt.Y(field=y_col, type="quantitative", scale=y_scale),
                 color=alt.value("steelblue")
             )
         )
         layers.append(layer)
-
-    chart = alt.layer(*layers)
-
-    print("LINE DF:\n", df)
-
-    return chart.properties(
-        title=spec["chart"].get("title", "Line Chart"),
-        width=600,
-        height=400
-    )
  
 
 # ---------------------------------------------------------

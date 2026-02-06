@@ -491,20 +491,26 @@ def main():
     # ---------------------------------------------------------
     st.subheader("2. Describe the Chart")
 
-    query = st.text_input("What would you like to visualize?")
+    # Styled label for the input box
+    st.markdown("""
+    <div style='font-size:18px; font-weight:600; margin-bottom:6px;'>
+    What would you like to visualize?
+    </div>
+    """, unsafe_allow_html=True)
+
+    query = st.text_input("")
 
     with st.expander("Example queries"):
         st.markdown("""
     <div style='font-size:18px; font-weight:600; line-height:1.6;'>
     • <b>blood presssure over time</b><br>
     • <b>heart rate over time</b><br>
-    • <b>temperature over time/b><br>
+    • <b>temperature over time</b><br>
     • <b>glucose over time</b><br>
     • <b>cholesterol by age group</b><br>
     • <b>temperature over time for female smokers</b><br>
     </div>
     """, unsafe_allow_html=True)
-
 
     # ---------------------------------------------------------
     # Generate Chart
