@@ -116,15 +116,15 @@ def _render_boxplot(spec, df):
         height=400
     )
 
+# ---------------------------------------------------------
+# LINE CHART
+# ---------------------------------------------------------
 
-# ---------------------------------------------------------
-# LINE CHART (with grouped dual-axis support)
-# ---------------------------------------------------------
 def _render_line(spec, df):
     encoding = spec["encoding"]
     x_col = encoding["x"]["column"]
 
-    # Determine which y-column to use
+    # Determine which y-column(s) to use
     y_enc = encoding.get("y", None)
     if isinstance(y_enc, dict):
         y_cols = y_enc["column"]
@@ -133,12 +133,12 @@ def _render_line(spec, df):
     else:
         y_cols = []
 
-    # If df is already aggregated (one row), line charts cannot render.
-    # Switch to a point chart. If x_col is missing, create a dummy one.
+    # ---------------------------------------------------------
+    # POINT MODE (aggregated df with only one row)
+    # ---------------------------------------------------------
     if len(df) == 1:
         y_col = y_cols[0]
 
-        # If the aggregated df doesn't have the x_col, create a synthetic one
         if x_col not in df.columns:
             df = df.copy()
             df["stat"] = "summary"
@@ -156,7 +156,7 @@ def _render_line(spec, df):
                 y=alt.Y(field=y_col, type="quantitative")
             )
         )
-        print("LINE DF (POINT MODE):\n", df)
+
         return chart.properties(
             title=spec["chart"].get("title", f"{y_col}"),
             width=600,
@@ -172,7 +172,7 @@ def _render_line(spec, df):
         # Auto‑zoom y-axis domain
         y_min = df[y_col].min()
         y_max = df[y_col].max()
-        padding = (y_max - y_min) * 0.1 if y_max != y_min else 1  # avoid zero-range
+        padding = (y_max - y_min) * 0.1 if y_max != y_min else 1
 
         y_scale = alt.Scale(domain=[y_min - padding, y_max + padding])
 
@@ -186,7 +186,15 @@ def _render_line(spec, df):
             )
         )
         layers.append(layer)
- 
+
+    # Combine layers into a single chart
+    chart = alt.layer(*layers)
+
+    return chart.properties(
+        title=spec["chart"].get("title", "Line Chart"),
+        width=600,
+        height=400
+    )
 
 # ---------------------------------------------------------
 # VIOLIN CHART
