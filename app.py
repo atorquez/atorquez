@@ -320,7 +320,7 @@ def main():
    # ---------------------------------------------------------
     # Header
     # ---------------------------------------------------------
-    st.title("VIZCAI")
+    st.title("VIZCAI: Just drag your files and ask what you want to see")
 
     #st.markdown(
     #    """
