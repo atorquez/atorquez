@@ -320,7 +320,7 @@ def main():
    # ---------------------------------------------------------
     # Header
     # ---------------------------------------------------------
-    st.title("Just drag your files and ask what you want to see")
+    st.title("🤓 Just drag your files and ask what you want to see 🚀")
 
     #st.markdown(
     #    """
