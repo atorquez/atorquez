@@ -500,15 +500,31 @@ def main():
 
     query = st.text_input("")
 
-    with st.expander("Example queries"):
+    with st.expander("Example queries supported in this phase"):
         st.markdown("""
     <div style='font-size:18px; font-weight:600; line-height:1.6;'>
-    • <b>blood presssure over time</b><br>
-    • <b>heart rate over time</b><br>
-    • <b>temperature over time</b><br>
-    • <b>glucose over time</b><br>
-    • <b>cholesterol by age group</b><br>
-    • <b>temperature over time for female smokers</b><br>
+
+    <b>Time-series</b><br>
+    • glucose over time<br>
+    • heart rate over time<br>
+    • temperature over time<br>
+    • blood pressure over time<br>
+    • oxygen saturation over time<br><br>
+    
+    <b>Grouped aggregations</b><br>
+    • mean glucose by age group<br>
+    • average glucose by age group<br>
+    • cholesterol by age group<br>
+    • heart rate by gender<br><br>
+    
+    <b>Filtered time-series</b><br>
+    • temperature over time for female smokers<br>
+    • glucose over time for seniors<br>
+    • heart rate over time for non-smokers<br><br>
+
+    <b>Multi-metric (same domain)</b><br>
+    • mean cholesterol and glucose<br>
+    • heart rate and temperature over time<br>
     </div>
     """, unsafe_allow_html=True)
 
