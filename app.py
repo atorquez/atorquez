@@ -322,25 +322,25 @@ def main():
     # ---------------------------------------------------------
     st.title("Civio")
 
-    st.markdown(
-        """
-        <div style='
-            font-size:20px;
-            font-weight:600;
-            padding:12px 14px;
-            background-color:#eef6ff;
-            border-left:4px solid #1f77b4;
-            border-radius:4px;
-            margin-bottom:10px;
-        '>
-            Upload your labs and vitals files or use synthetic demo data.<br>
-            Then describe the chart you want in natural language.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    #st.markdown(
+    #    """
+    #    <div style='
+    #       font-size:20px;
+    #       font-weight:600;
+    #       padding:12px 14px;
+    #       background-color:#eef6ff;
+    #        border-left:4px solid #1f77b4;
+    #       border-radius:4px;
+    #       margin-bottom:10px;
+    #   '>
+    #       Upload your labs and vitals files or use synthetic demo data.<br>
+    #       Then describe the chart you want in natural language.
+    #    </div>
+    #   """,
+    #   unsafe_allow_html=True
+    #)
 
-    st.markdown("---")
+    #st.markdown("---")
 
     # ---------------------------------------------------------
     # Data Source Section
@@ -496,12 +496,12 @@ def main():
     with st.expander("Example queries"):
         st.markdown("""
     <div style='font-size:18px; font-weight:600; line-height:1.6;'>
-    • <b>glucose over time</b><br>
+    • <b>blood presssure over time</b><br>
     • <b>heart rate over time</b><br>
-    • <b>mean glucose by age group</b><br>
-    • <b>average glucose by age group</b><br>
-    • <b>cholesterol over time for female patients</b><br>
-    • <b>mean cholesterol and glucose</b>
+    • <b>temperature over time/b><br>
+    • <b>glucose over time</b><br>
+    • <b>cholesterol by age group</b><br>
+    • <b>temperature over time for female smokers</b><br>
     </div>
     """, unsafe_allow_html=True)
 
